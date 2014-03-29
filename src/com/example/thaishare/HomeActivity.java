@@ -1,12 +1,11 @@
 package com.example.thaishare;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class HomeActivity extends Activity {
@@ -20,13 +19,20 @@ public class HomeActivity extends Activity {
         
         Toast.makeText(HomeActivity.this,"Welcome to ThaiShare!", Toast.LENGTH_SHORT).show();
         
+        
         // set up button listener
         quickModeBtn = (Button) findViewById(R.id.quickModeBtn);
         quickModeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	Toast.makeText(HomeActivity.this,"Navigating to quick mode", Toast.LENGTH_SHORT).show();
+            	navToQuickViewMode();
             }
         });
+    }
+    
+    public void navToQuickViewMode() {
+    	Intent intent = new Intent(this, QuickViewActivity.class);
+    	startActivity(intent);
     }
 
 
