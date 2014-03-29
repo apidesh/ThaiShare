@@ -7,5 +7,6 @@
     <string name="quick_mode_btn">Quick Mode</string>
     <string name="detail_mode_btn">Detail Mode</string>
     <string name="history_btn">History</string>
+    <string name="title_activity_quick_view">QuickViewActivity</string>
 
 </resources>
