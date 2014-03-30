@@ -1,17 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context="com.example.thaishare.QuickViewActivity"
     tools:ignore="MergeRootFrame" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/fillable_area"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Quick View Mode" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 
-</FrameLayout>
+        <TableLayout
+            android:id="@+id/dummy_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <HorizontalScrollView
+            android:id="@+id/header_scrollview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:id="@+id/table_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/fillable_area"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TableLayout
+                android:id="@+id/fixed_column"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <HorizontalScrollView
+                android:id="@+id/content_scrollview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TableLayout
+                    android:id="@+id/scrollable_part"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

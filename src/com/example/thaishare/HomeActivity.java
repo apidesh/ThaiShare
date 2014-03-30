@@ -24,7 +24,6 @@ public class HomeActivity extends Activity {
         quickModeBtn = (Button) findViewById(R.id.quickModeBtn);
         quickModeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	Toast.makeText(HomeActivity.this,"Navigating to quick mode", Toast.LENGTH_SHORT).show();
             	navToQuickViewMode();
             }
         });
