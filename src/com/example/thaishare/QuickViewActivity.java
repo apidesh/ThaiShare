@@ -6,10 +6,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +30,9 @@ import android.os.Build;
 
 public class QuickViewActivity extends ActionBarActivity {
 
+	protected SyncHorizontalScrollView headerScrollView;
+	protected SyncHorizontalScrollView contentScrollView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,6 +74,10 @@ public class QuickViewActivity extends ActionBarActivity {
 
 		// synchronize scrollviews
 		// TODO
+		headerScrollView = (SyncHorizontalScrollView) findViewById(R.id.header_scrollview);
+		contentScrollView = (SyncHorizontalScrollView) findViewById(R.id.content_scrollview);
+		headerScrollView.setSyncView(contentScrollView);
+		contentScrollView.setSyncView(headerScrollView);
 
 		// Column (fixed when scrolled horizontally)
 		TableLayout fixedColumn = (TableLayout) findViewById(R.id.fixed_column);
@@ -200,5 +209,5 @@ public class QuickViewActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
-
+	
 }

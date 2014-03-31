@@ -21,16 +21,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <HorizontalScrollView
+        <com.example.thaishare.SyncHorizontalScrollView
             android:id="@+id/header_scrollview"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:tag="activity_row" >
 
             <TableLayout
                 android:id="@+id/table_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </HorizontalScrollView>
+        </com.example.thaishare.SyncHorizontalScrollView>
     </LinearLayout>
 
     <ScrollView
@@ -49,16 +50,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <HorizontalScrollView
+            <com.example.thaishare.SyncHorizontalScrollView
                 android:id="@+id/content_scrollview"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:tag="content_row" >
 
                 <TableLayout
                     android:id="@+id/scrollable_part"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent" />
-            </HorizontalScrollView>
+            </com.example.thaishare.SyncHorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 
