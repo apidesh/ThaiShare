@@ -5,7 +5,10 @@ import android.support.v7.app.ActionBar.LayoutParams;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -97,24 +100,68 @@ public class QuickViewActivity extends ActionBarActivity {
 //	//util method
 //	private Button tableDataBtn;
 
-	public Button makeTableRowWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public TextView makeTableRowWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;
-		Button tableDataBtn = new Button(this);
-		tableDataBtn.setText(text);
-		tableDataBtn.setTextColor(Color.BLACK);
-		tableDataBtn.setTextSize(20);
-		tableDataBtn.setWidth(widthInPercentOfScreenWidth * screenWidth / 100);
-		tableDataBtn.setHeight(fixedHeightInPixels);
-		final String t = text;
+		TextView tableDataView = new TextView(this);
+		tableDataView.setText(text);
+		tableDataView.setTextColor(Color.BLACK);
+		tableDataView.setTextSize(20);
+		tableDataView.setWidth(widthInPercentOfScreenWidth * screenWidth / 100);
+		tableDataView.setHeight(fixedHeightInPixels);
 		
-		// set onclick event
-		tableDataBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	Toast.makeText(QuickViewActivity.this, t, Toast.LENGTH_SHORT).show();
-            }
+		
+		// long touch
+		
+		
+		// set ontouch event
+		tableDataView.setOnTouchListener(new View.OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case android.view.MotionEvent.ACTION_DOWN :
+//					Toast.makeText(QuickViewActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
+					prevColor = getBackgroundColor(v);
+					changeTextViewColor(v, Color.YELLOW);
+					break;
+				case android.view.MotionEvent.ACTION_UP :
+//					Toast.makeText(QuickViewActivity.this, "Released", Toast.LENGTH_SHORT).show();
+					changeTextViewColor(v, prevColor);
+					break;
+				}
+				
+				return true;
+			}
         });
 		
-		return tableDataBtn;
+		return tableDataView;
+	}
+	
+	private int prevColor;
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public int getBackgroundColor(View v) {
+		Drawable background = v.getBackground();
+		int color = -1;
+		if (background instanceof ColorDrawable) {
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+				color = Color.GRAY;
+			}
+			else {
+				color = ((ColorDrawable) background).getColor();
+			}
+		}
+		return color;
+	}
+	
+	/**
+	 * On tap event handler
+	 * @param v
+	 * @param color
+	 */
+	public void changeTextViewColor(View v, int color) {
+		v.setBackgroundColor(color);
 	}
 
 	@Override
