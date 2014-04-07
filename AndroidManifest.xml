@@ -24,7 +24,7 @@
         </activity>
         <activity android:name="com.example.thaishare.QuickViewActivity"
             android:label="@string/title_activity_quick_view"
-            android:theme="@style/Theme.AppCompat"
+            android:theme="@style/NotepadBarTheme"
             android:parentActivityName="com.example.ThaiShare.HomeActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ThaiShare.HomeActivity" />

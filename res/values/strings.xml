@@ -4,9 +4,14 @@
     <string name="app_name">ThaiShare</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="quick_mode_btn">Quick Mode</string>
-    <string name="detail_mode_btn">Detail Mode</string>
+    <string name="quick_mode_btn">Quick New</string>
+    <string name="detail_mode_btn">Detail Page</string>
     <string name="history_btn">History</string>
-    <string name="title_activity_quick_view">QuickViewActivity</string>
+    <string name="title_activity_quick_view">Quick Edit</string>
+    
+    <string name="default_item_placeholder">Item</string>
+    <string name="dummy_header_name">Group Name</string>
+    <string name="default_group_placeholder">Group</string>
+    <string name="action_edit_table">Edit Table</string>
 
 </resources>

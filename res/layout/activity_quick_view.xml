@@ -1,67 +1,123 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/white"
-    android:gravity="center_horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:background="#f00"
     android:orientation="vertical"
-    tools:context="com.example.thaishare.QuickViewActivity"
-    tools:ignore="MergeRootFrame" >
+    android:weightSum="1" >
 
-    <LinearLayout
-        android:id="@+id/fillable_area"
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <TableLayout
-            android:id="@+id/dummy_table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.example.thaishare.SyncHorizontalScrollView
-            android:id="@+id/header_scrollview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:tag="activity_row" >
-
-            <TableLayout
-                android:id="@+id/table_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </com.example.thaishare.SyncHorizontalScrollView>
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="bottom|center"
+        android:background="#fff"
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/fillable_area"
+            android:id="@+id/container"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="@color/note_page"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:context="com.example.thaishare.QuickViewActivity"
+            tools:ignore="MergeRootFrame" >
+
+            <LinearLayout
+                android:id="@+id/fillable_area"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <TableLayout
+                    android:id="@+id/dummy_table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.example.thaishare.SyncHorizontalScrollView
+                    android:id="@+id/header_scrollview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:tag="activity_row" >
+
+                    <TableLayout
+                        android:id="@+id/table_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </com.example.thaishare.SyncHorizontalScrollView>
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/fillable_area2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+
+                    <TableLayout
+                        android:id="@+id/fixed_column"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.example.thaishare.SyncHorizontalScrollView
+                        android:id="@+id/content_scrollview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:tag="content_row" >
+
+                        <TableLayout
+                            android:id="@+id/scrollable_part"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent" />
+                    </com.example.thaishare.SyncHorizontalScrollView>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context="com.example.thaishare.QuickViewActivity"
+        tools:ignore="MergeRootFrame" >
+
+        <LinearLayout
+            android:id="@+id/edit_fillable_area"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
             <TableLayout
-                android:id="@+id/fixed_column"
+                android:id="@+id/edit_dummy_table"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" 
+                android:layout_marginRight="10dp"/>
 
             <com.example.thaishare.SyncHorizontalScrollView
-                android:id="@+id/content_scrollview"
+                android:id="@+id/edit_header_scrollview"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:tag="content_row" >
+                android:tag="activity_row" >
 
                 <TableLayout
-                    android:id="@+id/scrollable_part"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
+                    android:id="@+id/edit_table_header"
+                    android:layout_width="5dp"
+                    android:layout_height="60dp" 
+                    android:layout_marginTop="15dp"/>
             </com.example.thaishare.SyncHorizontalScrollView>
         </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    </LinearLayout>
+    
+</RelativeLayout>

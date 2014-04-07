@@ -1,7 +1,10 @@
 <resources>
-
     <color name="black_overlay">#66000000</color>
     <color name="default_blue">#0333a7</color>
 	<color name="main_background_color">#FFFFFF</color>
 	<color name="white">#FFFFFF</color>
+	<color name="note_page">#FFF6D5</color>
+	<color name="note_text">#151515</color>
+	<color name="table_item_header">#FFC70C</color>
+	<color name="table_group_column">#FFC70C</color>
 </resources>

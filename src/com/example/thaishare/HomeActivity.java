@@ -19,7 +19,6 @@ public class HomeActivity extends Activity {
         
         Toast.makeText(HomeActivity.this,"Welcome to ThaiShare!", Toast.LENGTH_SHORT).show();
         
-        
         // set up button listener
         quickModeBtn = (Button) findViewById(R.id.quickModeBtn);
         quickModeBtn.setOnClickListener(new View.OnClickListener() {
@@ -29,9 +28,13 @@ public class HomeActivity extends Activity {
         });
     }
     
+    /**
+     * Go to quick edit mode
+     */
     public void navToQuickViewMode() {
     	Intent intent = new Intent(this, QuickViewActivity.class);
     	startActivity(intent);
+    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 

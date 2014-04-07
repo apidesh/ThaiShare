@@ -11,6 +11,7 @@ import android.widget.HorizontalScrollView;
 public class SyncHorizontalScrollView extends HorizontalScrollView {
 
 	SyncHorizontalScrollView other;
+	SyncHorizontalScrollView other2;
 
 	public SyncHorizontalScrollView(Context context, AttributeSet attr) {
 		super(context, attr);
@@ -20,13 +21,15 @@ public class SyncHorizontalScrollView extends HorizontalScrollView {
 	 * Set the other sync horizontal view to synchronize with this view
 	 * @param v The other view
 	 */
-	public void setSyncView(SyncHorizontalScrollView v) {
+	public void setSyncView(SyncHorizontalScrollView v, SyncHorizontalScrollView v2) {
 		other = v;
+		other2 = v2;
 	}
 
 	@Override
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
 		other.scrollTo(l, 0);
+		other2.scrollTo(l, 0);
 	}
 
 }

@@ -8,6 +8,19 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
     </style>
+    <style name="NotepadBarTheme"
+           parent="@style/Theme.AppCompat.Light">
+        <item name="android:actionBarStyle">@style/NotepadActionBar</item>
+        <item name="android:actionBarTabTextStyle">@style/NotepadActionBarTabText</item>
+        <item name="android:actionMenuTextColor">@color/note_text</item>
+    </style>
+    
+    <!-- ActionBar styles -->
+    <style name="NotepadActionBar"
+           parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/note_page</item>
+        <item name="android:titleTextStyle">@style/NotepadBarTitleText</item>
+    </style>
     
     <style name="Theme.Default" parent="@android:style/Theme.Holo.Light"></style>
     <style name="Theme.NoTitle" parent="@android:style/Theme.Holo.Light.NoActionBar"></style>
