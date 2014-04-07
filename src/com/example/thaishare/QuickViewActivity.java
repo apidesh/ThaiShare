@@ -37,8 +37,13 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected static final int STARTING_NUM_ROWS = 4;						// default number of rows
 	protected static final int STARTING_NUM_COLUMNS = 3;					// default number of activities
 	
+	protected int fixedColumnWidth = 20;										// percentage of row header width with respect to the screen width
+	protected int scrollableColumnWidth = 20;									// percentage of table row width with respect to the screen width
+	protected int fixedRowHeight = 150;											// height in pixels of table row
+	protected int fixedHeaderHeight = 100;										// height in pixels of header row
 	protected TableRow editRow;
 	protected TableRow headerRow;
+	protected TableLayout scrollablePart;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -56,13 +61,6 @@ public class QuickViewActivity extends ActionBarActivity {
 		//		bar.setDisplayShowHomeEnabled(false);		
 
 		TableRow.LayoutParams wrapWrapTableRowParams = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-		/* Table size variables */
-		int fixedColumnWidth = 20;											// percentage of row header width with respect to the screen width
-		int scrollableColumnWidth = 20;										// percentage of table row width with respect to the screen width
-		int fixedRowHeight = 150;											// height in pixels of table row
-		int fixedHeaderHeight = 100;										// height in pixels of header row
-
 		TableRow row = new TableRow(this);
 		TableRow editDummyRow = new TableRow(this);
 
@@ -108,7 +106,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		TableLayout fixedColumn = (TableLayout) findViewById(R.id.fixed_column);
 
 		// Rest of the table (within a scroll view)
-		TableLayout scrollablePart = (TableLayout) findViewById(R.id.scrollable_part);
+		scrollablePart = (TableLayout) findViewById(R.id.scrollable_part);
 		for(int i = 0; i < STARTING_NUM_ROWS; i++) {
 			TextView fixedView = makeTableRowWithText(getResources().getString( R.string.default_group_placeholder ) + " " + (i+1), 
 					scrollableColumnWidth, fixedRowHeight);
@@ -125,11 +123,49 @@ public class QuickViewActivity extends ActionBarActivity {
 			((TextView) row.getChildAt(0)).setText("hello!!!");;
 		}
 
+		editRow.addView(createAddButton());
+		
 		// hide all edit buttons
 		editHeaderScrollView.setVisibility(View.INVISIBLE);
 		
-		//TODO
-		//
+	}
+	
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private Button createAddButton() {
+		Button addBtn = new Button(this);
+		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+			addBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_btn));
+		}
+		else {
+			addBtn.setBackground(getResources().getDrawable(R.drawable.add_btn));
+		}
+		
+		addBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	Toast.makeText(QuickViewActivity.this, "Added 1 column", Toast.LENGTH_SHORT).show();
+            	addColumn();
+            }
+        });
+		return addBtn;
+	}
+
+	/**
+	 * Method event called when user tabs the add column button
+	 */
+	public void addColumn() {
+		/* add item header row */
+		headerRow.addView(makeTableRowWithText(getResources().getString( R.string.default_item_placeholder ) 
+				, fixedColumnWidth, fixedHeaderHeight)); 
+		
+		/* add remove button for row */
+		Button removeBtn = createRemoveButton(false);
+		editRow.addView(removeBtn, editRow.getChildCount() - 1);
+		
+		/* add table content row */
+		for(int i = 0, numRows = scrollablePart.getChildCount(); i < numRows; i++) {
+			TableRow row = (TableRow) scrollablePart.getChildAt(i);
+			row.addView(makeTableRowWithText("new value", scrollableColumnWidth, fixedRowHeight));
+		}
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
