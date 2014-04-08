@@ -44,6 +44,8 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected TableRow editRow;
 	protected TableRow headerRow;
 	protected TableLayout scrollablePart;
+	
+	protected static final int ADD_COLUMN_BTN_TAG = 5000;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -68,7 +70,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		TableLayout dummy = (TableLayout) findViewById(R.id.dummy_table);
 		TableLayout editDummy = (TableLayout) findViewById(R.id.edit_dummy_table);
 
-		Button removeBtn = createRemoveButton(true);
+		Button removeBtn = createRemoveButton(true, -1);
 		row.addView(makeTableRowWithText(getResources().getString( R.string.dummy_header_name ), fixedColumnWidth, fixedHeaderHeight));
 		row.setBackgroundColor(getResources().getColor( R.color.table_item_header ));
 		editDummyRow.addView(removeBtn);
@@ -86,7 +88,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		headerRow.setGravity(Gravity.CENTER);
 		headerRow.setBackgroundColor(getResources().getColor( R.color.table_item_header ));
 		for (int i = 0; i < STARTING_NUM_COLUMNS; i++) {
-			removeBtn = createRemoveButton(false);
+			removeBtn = createRemoveButton(false, i);
 			editRow.addView(removeBtn);
 			headerRow.addView(makeTableRowWithText(getResources().getString( R.string.default_item_placeholder ) + " " + (i+1), 
 					fixedColumnWidth, fixedHeaderHeight));
@@ -133,6 +135,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private Button createAddButton() {
 		Button addBtn = new Button(this);
+		addBtn.setTag(ADD_COLUMN_BTN_TAG);
 		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			addBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.add_btn));
 		}
@@ -148,6 +151,32 @@ public class QuickViewActivity extends ActionBarActivity {
         });
 		return addBtn;
 	}
+	
+	public void deleteColumn(View v) {
+		int column = (Integer) v.getTag();
+		
+		// remove current header
+		headerRow.removeViewAt(column);
+
+		// subtract all the tag to the right of this column by 1
+		for (int i = column+1, numColumns = editRow.getChildCount(); i < numColumns; i++) {
+			Button button = (Button) editRow.getChildAt(i);
+			int tag = (Integer) button.getTag();
+			if (tag != ADD_COLUMN_BTN_TAG) {
+				button.setTag(tag - 1);;
+			}
+		}
+		
+		// remove current remove button
+		editRow.removeViewAt(column);
+		
+		// remove all table cell in this column
+		for (int i = 0, numRows = scrollablePart.getChildCount(); i < numRows; i++) {
+			TableRow row = (TableRow) scrollablePart.getChildAt(i);
+			row.removeViewAt(column);
+		}
+		
+	}
 
 	/**
 	 * Method event called when user tabs the add column button
@@ -158,7 +187,8 @@ public class QuickViewActivity extends ActionBarActivity {
 				, fixedColumnWidth, fixedHeaderHeight)); 
 		
 		/* add remove button for row */
-		Button removeBtn = createRemoveButton(false);
+		int numColumn = headerRow.getChildCount();
+		Button removeBtn = createRemoveButton(false, numColumn-1);
 		editRow.addView(removeBtn, editRow.getChildCount() - 1);
 		
 		/* add table content row */
@@ -167,22 +197,32 @@ public class QuickViewActivity extends ActionBarActivity {
 			row.addView(makeTableRowWithText("new value", scrollableColumnWidth, fixedRowHeight));
 		}
 	}
+	
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	public Button createRemoveButton(boolean hidden) {
+	public Button createRemoveButton(boolean hidden, int columnToRemove) {
 		Button removeBtn = new Button(this);
+		removeBtn.setTag(columnToRemove);
 		if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 			if (!hidden)
 				removeBtn.setBackgroundDrawable(getResources().getDrawable(R.drawable.remove_btn));
-			else 
-				removeBtn.setBackgroundColor(Color.TRANSPARENT);
+			else {
+				removeBtn.setVisibility(View.INVISIBLE);
+			}
+				
 		}
 		else {
 			if (!hidden)
 				removeBtn.setBackground(getResources().getDrawable(R.drawable.remove_btn));
 			else 
-				removeBtn.setBackgroundColor(Color.TRANSPARENT);
+				removeBtn.setVisibility(View.INVISIBLE);
 		}
+		
+		removeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	deleteColumn(v);
+            }
+        });
 		return removeBtn;
 	}
 
