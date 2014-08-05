@@ -34,7 +34,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected SyncHorizontalScrollView contentScrollView;
 	protected SyncHorizontalScrollView editHeaderScrollView;
 
-	protected static final int STARTING_NUM_ROWS = 4;						// default number of rows
+	protected static final int STARTING_NUM_ROWS = 12;						// default number of rows
 	protected static final int STARTING_NUM_COLUMNS = 3;					// default number of activities
 	
 	protected int fixedColumnWidth = 20;										// percentage of row header width with respect to the screen width
