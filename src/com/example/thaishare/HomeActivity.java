@@ -10,7 +10,8 @@ import android.widget.Toast;
 
 public class HomeActivity extends Activity {
 	
-	private Button quickModeBtn;
+	private Button quickModeBtn, addItemBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,14 @@ public class HomeActivity extends Activity {
             	navToQuickViewMode();
             }
         });
+        
+        
+        addItemBtn = (Button) findViewById(R.id.addItemBtn);
+        addItemBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	navToAddItemViewMode();
+            }
+        });
     }
     
     /**
@@ -37,6 +46,12 @@ public class HomeActivity extends Activity {
     	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
+    public void navToAddItemViewMode() {
+    	Intent intent = new Intent(this, QuickViewActivity.class);
+    	startActivity(intent);
+    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

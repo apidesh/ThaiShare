@@ -13,5 +13,7 @@
     <string name="dummy_header_name">Group Name</string>
     <string name="default_group_placeholder">Group</string>
     <string name="action_edit_table">Edit Table</string>
+    <string name="add">add</string>
+    <string name="add_item">Add Item</string>
 
 </resources>
