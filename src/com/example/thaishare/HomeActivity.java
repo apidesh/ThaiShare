@@ -47,7 +47,7 @@ public class HomeActivity extends Activity {
     }
 
     public void navToAddItemViewMode() {
-    	Intent intent = new Intent(this, QuickViewActivity.class);
+    	Intent intent = new Intent(this, AddNewItemActivity.class);
     	startActivity(intent);
     	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }

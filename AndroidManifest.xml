@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name="com.example.thaishare.HomeActivity"
+            android:name=".HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.NoTitle" >
             <intent-filter>
@@ -22,12 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.thaishare.QuickViewActivity"
+        <activity
+            android:name=".QuickViewActivity"
             android:label="@string/title_activity_quick_view"
-            android:theme="@style/NotepadBarTheme"
-            android:parentActivityName="com.example.ThaiShare.HomeActivity">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            android:parentActivityName="com.example.ThaiShare.HomeActivity"
+            android:theme="@style/NotepadBarTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ThaiShare.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".AddNewItemActivity"
+            android:label="@string/title_activity_add_new_item" >
         </activity>
     </application>
 

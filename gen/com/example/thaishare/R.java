@@ -1231,15 +1231,17 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
-        public static final int activity_home=0x7f030018;
-        public static final int activity_quick_view=0x7f030019;
-        public static final int fragment_quick_view=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int activity_add_new_item=0x7f030018;
+        public static final int activity_home=0x7f030019;
+        public static final int activity_quick_view=0x7f03001a;
+        public static final int fragment_quick_view=0x7f03001b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
     }
     public static final class menu {
-        public static final int home=0x7f0c0000;
-        public static final int quick_edit_actions=0x7f0c0001;
-        public static final int quick_view=0x7f0c0002;
+        public static final int add_new_item=0x7f0c0000;
+        public static final int home=0x7f0c0001;
+        public static final int quick_edit_actions=0x7f0c0002;
+        public static final int quick_view=0x7f0c0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1294,6 +1296,7 @@ containing a value of this type.
         public static final int hello_world=0x7f0a000f;
         public static final int history_btn=0x7f0a0012;
         public static final int quick_mode_btn=0x7f0a0010;
+        public static final int title_activity_add_new_item=0x7f0a001a;
         public static final int title_activity_quick_view=0x7f0a0013;
     }
     public static final class style {
