@@ -35,6 +35,10 @@
             android:name=".AddNewItemActivity"
             android:label="@string/title_activity_add_new_item" >
         </activity>
+        <activity
+            android:name=".ListItemActivity"
+            android:label="@string/title_activity_list_item" >
+        </activity>
     </application>
 
 </manifest>

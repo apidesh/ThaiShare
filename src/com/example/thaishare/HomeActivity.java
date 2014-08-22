@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends Activity {
 	
-	private Button quickModeBtn, addItemBtn;
+	private Button quickModeBtn, addItemBtn, listItemBtn;
 
 
     @Override
@@ -35,6 +35,17 @@ public class HomeActivity extends Activity {
             	navToAddItemViewMode();
             }
         });
+        
+        listItemBtn =(Button) findViewById(R.id.listItemBtn);
+        listItemBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				navToListItemViewMode();
+			}
+		});
+        
     }
     
     /**
@@ -52,6 +63,12 @@ public class HomeActivity extends Activity {
     	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
     
+    
+    public void navToListItemViewMode() {
+    	Intent intent = new Intent(this, ListItemActivity.class);
+    	startActivity(intent);
+    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

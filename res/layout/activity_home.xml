@@ -44,12 +44,21 @@
         android:textColorHint="@color/note_page" />
 
     <Button
-        android:id="@+id/addItemBtn"
+        android:id="@+id/listItemBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/quickModeBtn"
-        android:layout_alignRight="@+id/historyBtn"
-        android:layout_marginBottom="46dp"
+        android:layout_alignLeft="@+id/quickModeBtn"
+        android:layout_marginBottom="22dp"
+        android:text="List Item" />
+
+    <Button
+        android:id="@+id/addItemBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listItemBtn"
+        android:layout_alignLeft="@+id/listItemBtn"
+        android:layout_marginBottom="21dp"
         android:text="@string/add_item" />
 
 </RelativeLayout>
