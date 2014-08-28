@@ -37,6 +37,10 @@ public class AddNewItemActivity extends Activity {
 				long id = dataHandler.insertData(getName, getPrice);
 				Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
 				dataHandler.close();
+				
+				// close this activity
+				setResult(RESULT_OK);
+				finish();
 			}
 		});
 		

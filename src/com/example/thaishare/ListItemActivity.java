@@ -23,7 +23,7 @@ public class ListItemActivity extends Activity {
 		Cursor cursor = dataHandler.returnData();
 		if(cursor.moveToFirst())
 		{
-			
+		
 			do
 			{
 				

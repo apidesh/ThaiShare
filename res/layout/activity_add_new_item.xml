@@ -8,30 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.thaishare.AddNewItemActivity" >
 
-    <EditText
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="34dp"
-        android:layout_marginTop="58dp"
-        android:ems="10"
-        android:hint="Enter price here" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/price"
-        android:layout_below="@+id/price"
-        android:layout_marginTop="47dp"
-        android:ems="10"
-        android:hint="Enter menu here" />
-
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
@@ -41,5 +17,28 @@
         android:layout_marginLeft="63dp"
         android:layout_marginTop="67dp"
         android:text="Save" />
+
+    <EditText
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/name"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="Enter price here" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Enter menu here" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

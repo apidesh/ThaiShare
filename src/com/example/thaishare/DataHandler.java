@@ -26,6 +26,8 @@ public class DataHandler {
 		dbhelper = new DataBaseHelper(ctx);
 	}
 	
+	
+	
 	private static class DataBaseHelper extends SQLiteOpenHelper
 	{
 
@@ -33,7 +35,9 @@ public class DataHandler {
 			super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
 			// TODO Auto-generated constructor stub
 		}
-
+		
+			
+		
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			// TODO Auto-generated method stub
@@ -69,6 +73,7 @@ public class DataHandler {
 	{
 		dbhelper.close();
 	}
+	
 	
 	public long insertData(String name, String price)
 	{		

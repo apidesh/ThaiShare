@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -36,7 +38,7 @@ public class QuickViewActivity extends ActionBarActivity {
 
 	protected static final int STARTING_NUM_ROWS = 12;						// default number of rows
 	protected static final int STARTING_NUM_COLUMNS = 3;					// default number of activities
-	
+
 	protected int fixedColumnWidth = 20;										// percentage of row header width with respect to the screen width
 	protected int scrollableColumnWidth = 20;									// percentage of table row width with respect to the screen width
 	protected int fixedRowHeight = 150;											// height in pixels of table row
@@ -44,7 +46,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected TableRow editRow;
 	protected TableRow headerRow;
 	protected TableLayout scrollablePart;
-	
+
 	protected static final int ADD_COLUMN_BTN_TAG = 5000;
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -90,7 +92,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		for (int i = 0; i < STARTING_NUM_COLUMNS; i++) {
 			removeBtn = createRemoveButton(false, i);
 			editRow.addView(removeBtn);
-			headerRow.addView(makeTableRowWithText(getResources().getString( R.string.default_item_placeholder ) + " " + (i+1), 
+			headerRow.addView(makeTableRowHeaderWithText(getResources().getString( R.string.default_item_placeholder ) + " " + (i+1), 
 					fixedColumnWidth, fixedHeaderHeight));
 		}
 		edit_header.addView(editRow);
@@ -126,12 +128,12 @@ public class QuickViewActivity extends ActionBarActivity {
 		}
 
 		editRow.addView(createAddButton());
-		
+
 		// hide all edit buttons
 		editHeaderScrollView.setVisibility(View.INVISIBLE);
-		
+
 	}
-	
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private Button createAddButton() {
 		Button addBtn = new Button(this);
@@ -142,19 +144,19 @@ public class QuickViewActivity extends ActionBarActivity {
 		else {
 			addBtn.setBackground(getResources().getDrawable(R.drawable.add_btn));
 		}
-		
+
 		addBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	Toast.makeText(QuickViewActivity.this, "Added 1 column", Toast.LENGTH_SHORT).show();
-            	addColumn();
-            }
-        });
+			public void onClick(View v) {
+				Toast.makeText(QuickViewActivity.this, "Added 1 column", Toast.LENGTH_SHORT).show();
+				addColumn();
+			}
+		});
 		return addBtn;
 	}
-	
+
 	public void deleteColumn(View v) {
 		int column = (Integer) v.getTag();
-		
+
 		// remove current header
 		headerRow.removeViewAt(column);
 
@@ -166,16 +168,16 @@ public class QuickViewActivity extends ActionBarActivity {
 				button.setTag(tag - 1);;
 			}
 		}
-		
+
 		// remove current remove button
 		editRow.removeViewAt(column);
-		
+
 		// remove all table cell in this column
 		for (int i = 0, numRows = scrollablePart.getChildCount(); i < numRows; i++) {
 			TableRow row = (TableRow) scrollablePart.getChildAt(i);
 			row.removeViewAt(column);
 		}
-		
+
 	}
 
 	/**
@@ -183,21 +185,55 @@ public class QuickViewActivity extends ActionBarActivity {
 	 */
 	public void addColumn() {
 		/* add item header row */
-		headerRow.addView(makeTableRowWithText(getResources().getString( R.string.default_item_placeholder ) 
+		headerRow.addView(makeTableRowHeaderWithText(getResources().getString( R.string.default_item_placeholder ) 
 				, fixedColumnWidth, fixedHeaderHeight)); 
-		
+
 		/* add remove button for row */
 		int numColumn = headerRow.getChildCount();
 		Button removeBtn = createRemoveButton(false, numColumn-1);
 		editRow.addView(removeBtn, editRow.getChildCount() - 1);
-		
+
 		/* add table content row */
 		for(int i = 0, numRows = scrollablePart.getChildCount(); i < numRows; i++) {
 			TableRow row = (TableRow) scrollablePart.getChildAt(i);
 			row.addView(makeTableRowWithText("new value", scrollableColumnWidth, fixedRowHeight));
 		}
 	}
-	
+
+	@Override 
+	protected void onActivityResult(int requestCode, int resultCode, 
+			Intent data) { 
+		// TODO Auto-generated method stub 
+		Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
+		
+		super.onActivityResult(requestCode, resultCode, data); 
+		String getName = "";
+		String getPrice = "";
+		if(resultCode == RESULT_OK) { 
+			DataHandler dataHandler = new DataHandler(getBaseContext());
+			dataHandler.open();		
+			Cursor cursor = dataHandler.returnData();
+			if(cursor.moveToFirst())
+			{
+			
+				do
+				{
+					
+					getName = cursor.getString(0);
+					getPrice = cursor.getString(1);
+					
+				}while(cursor.moveToNext());
+				
+			}
+			
+			dataHandler.close();
+		} 
+		
+		// set display
+		TextView textView = (TextView) headerRow.getChildAt(0);
+		textView.setText(getName);
+	} 
+
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public Button createRemoveButton(boolean hidden, int columnToRemove) {
@@ -209,7 +245,7 @@ public class QuickViewActivity extends ActionBarActivity {
 			else {
 				removeBtn.setVisibility(View.INVISIBLE);
 			}
-				
+
 		}
 		else {
 			if (!hidden)
@@ -217,13 +253,55 @@ public class QuickViewActivity extends ActionBarActivity {
 			else 
 				removeBtn.setVisibility(View.INVISIBLE);
 		}
-		
+
 		removeBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	deleteColumn(v);
-            }
-        });
+			public void onClick(View v) {
+				deleteColumn(v);
+			}
+		});
 		return removeBtn;
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public TextView makeTableRowHeaderWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
+		int screenWidth = getResources().getDisplayMetrics().widthPixels;
+		TextView tableDataView = new TextView(this);
+		tableDataView.setText(text);
+		tableDataView.setTextColor(Color.BLACK);
+		tableDataView.setTextSize(20);
+		tableDataView.setWidth(widthInPercentOfScreenWidth * screenWidth / 100);
+		tableDataView.setHeight(fixedHeightInPixels);
+
+
+		// long touch
+
+
+		// set ontouch event
+		tableDataView.setOnTouchListener(new View.OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case android.view.MotionEvent.ACTION_DOWN :
+					//					changeTextViewColor(v, Color.YELLOW);
+					navToAddItemViewMode();
+					break;
+				case android.view.MotionEvent.ACTION_UP :
+					//					changeTextViewColor(v, prevColor);
+					break;
+				}
+
+				return true;
+			}
+		});
+
+		return tableDataView;
+	}
+
+	public void navToAddItemViewMode() {
+		Intent intent = new Intent(this, AddNewItemActivity.class);
+		startActivityForResult(intent, 30);
+		//	    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
 	//	//util method
