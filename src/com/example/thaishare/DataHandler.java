@@ -9,12 +9,13 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataHandler {
+	public static final String ID = "id";
 	public static final String NAME = "name";
 	public static final String PRICE = "price";
 	public static final String TABLE_NAME = "menu";
 	public static final String DATABASE_NAME = "thaisharedb";
 	public static final int DATABASE_VERSION = 1;
-	public static final String CREATE_TABLE = "create table menu (name text not null, price text not null)";
+	public static final String CREATE_TABLE = "create table menu (id integer primary key autoincrement, name text not null, price float not null)";
 	public static String DROP_TABLE = "DROP TABLE IF EXISTS %s";
 	
 	DataBaseHelper dbhelper;
@@ -86,7 +87,7 @@ public class DataHandler {
 	
 	public Cursor returnData()
 	{
-		return db.query(TABLE_NAME, new String[]{NAME, PRICE},null,null,null,null,null);
+		return db.query(TABLE_NAME, new String[]{ID, NAME, PRICE},null,null,null,null,null);
 		
 	}
 	

@@ -1,6 +1,8 @@
 package com.example.thaishare;
 
 
+import java.util.ArrayList;
+
 import android.support.v7.app.ActionBar.LayoutParams;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -207,8 +209,11 @@ public class QuickViewActivity extends ActionBarActivity {
 		Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
 		
 		super.onActivityResult(requestCode, resultCode, data); 
+		ArrayList<MenuItemData> menuList = new ArrayList<MenuItemData>();
+           
+		Integer getId = -1;
 		String getName = "";
-		String getPrice = "";
+		Double getPrice = 0.0;
 		if(resultCode == RESULT_OK) { 
 			DataHandler dataHandler = new DataHandler(getBaseContext());
 			dataHandler.open();		
@@ -218,9 +223,17 @@ public class QuickViewActivity extends ActionBarActivity {
 			
 				do
 				{
+					MenuItemData item = new MenuItemData();
+					getId = cursor.getInt(cursor.getColumnIndex("id"));
+					getName = cursor.getString(cursor.getColumnIndex("name"));
+					getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
 					
-					getName = cursor.getString(0);
-					getPrice = cursor.getString(1);
+					item.setId(getId);
+					item.setName(getName);
+					item.setPrice(getPrice);
+					
+					menuList.add(item);
+					
 					
 				}while(cursor.moveToNext());
 				
@@ -230,8 +243,13 @@ public class QuickViewActivity extends ActionBarActivity {
 		} 
 		
 		// set display
-		TextView textView = (TextView) headerRow.getChildAt(0);
-		textView.setText(getName);
+		for(int i=0; i< menuList.size(); i++)
+		{
+		TextView textView = (TextView) headerRow.getChildAt(i);
+		MenuItemData menu = (MenuItemData)menuList.get(i);
+		textView.setText(menu.getName());
+		}
+
 	} 
 
 

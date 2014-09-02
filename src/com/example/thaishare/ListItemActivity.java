@@ -19,6 +19,7 @@ public class ListItemActivity extends Activity {
 		
 		dataHandler = new DataHandler(getBaseContext());
 		dataHandler.open();		
+		Integer getId = -1;
 		String getName = "", getPrice = "";
 		Cursor cursor = dataHandler.returnData();
 		if(cursor.moveToFirst())
@@ -26,9 +27,9 @@ public class ListItemActivity extends Activity {
 		
 			do
 			{
-				
-				getName = cursor.getString(0);
-				getPrice = cursor.getString(1);
+				getId = cursor.getInt(0);
+				getName = cursor.getString(1);
+				getPrice = cursor.getString(2);
 				
 			}while(cursor.moveToNext());
 			
