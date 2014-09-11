@@ -90,6 +90,19 @@ public class DataHandler {
 		return db.query(TABLE_NAME, new String[]{ID, NAME, PRICE},null,null,null,null,null);
 		
 	}
+
+
+	public Cursor findById(int id)
+	{
+       return db.query(TABLE_NAME, new String[]{ID, NAME, PRICE},"id = ?", new String[] { Integer.toString(id) } ,null,null,null);	
+	}
+	
+	public void UpdateMenu(int id, String name, String price){
+		ContentValues newValues = new ContentValues();
+		newValues.put(NAME, name);
+		newValues.put(PRICE, price);
+		db.update(TABLE_NAME, newValues, "id="+id, null);
+	}
 	
 	
 }

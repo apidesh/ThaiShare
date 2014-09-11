@@ -48,8 +48,10 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected TableRow editRow;
 	protected TableRow headerRow;
 	protected TableLayout scrollablePart;
-
+    protected ArrayList<MenuItemData> menuList = null;
 	protected static final int ADD_COLUMN_BTN_TAG = 5000;
+	
+	protected final static String MENU_INTENT_DATA = "MENU_ID";
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -209,7 +211,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
 		
 		super.onActivityResult(requestCode, resultCode, data); 
-		ArrayList<MenuItemData> menuList = new ArrayList<MenuItemData>();
+		menuList = new ArrayList<MenuItemData>();
            
 		Integer getId = -1;
 		String getName = "";
@@ -302,7 +304,10 @@ public class QuickViewActivity extends ActionBarActivity {
 				switch (event.getAction()) {
 				case android.view.MotionEvent.ACTION_DOWN :
 					//					changeTextViewColor(v, Color.YELLOW);
-					navToAddItemViewMode();
+					Intent intent = new Intent(getBaseContext(), AddNewItemActivity.class);
+					if (menuList != null) intent.putExtra(MENU_INTENT_DATA, menuList.get(0));
+					else intent.putExtra("MENU_ID", new MenuItemData());
+					navToAddItemViewMode(intent);
 					break;
 				case android.view.MotionEvent.ACTION_UP :
 					//					changeTextViewColor(v, prevColor);
@@ -316,8 +321,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		return tableDataView;
 	}
 
-	public void navToAddItemViewMode() {
-		Intent intent = new Intent(this, AddNewItemActivity.class);
+	public void navToAddItemViewMode(Intent intent) {
 		startActivityForResult(intent, 30);
 		//	    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
