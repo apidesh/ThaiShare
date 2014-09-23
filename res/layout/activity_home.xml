@@ -52,13 +52,23 @@
         android:layout_marginBottom="22dp"
         android:text="List Item" />
 
-    <Button
-        android:id="@+id/addItemBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/listItemBtn"
-        android:layout_alignLeft="@+id/listItemBtn"
-        android:layout_marginBottom="21dp"
-        android:text="@string/add_item" />
+  <Button
+      android:id="@+id/addMembersBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBaseline="@+id/addItemBtn"
+      android:layout_alignBottom="@+id/addItemBtn"
+      android:layout_alignParentRight="true"
+      android:text="Add Members" />
+
+  <Button
+      android:id="@+id/addItemBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_above="@+id/listItemBtn"
+      android:layout_alignRight="@+id/listItemBtn"
+      android:layout_marginBottom="23dp"
+      android:layout_marginRight="48dp"
+      android:text="@string/add_item" />
 
 </RelativeLayout>

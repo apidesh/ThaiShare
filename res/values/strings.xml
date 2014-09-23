@@ -14,7 +14,8 @@
     <string name="action_edit_table">Edit Table</string>
     <string name="add">add</string>
     <string name="add_item">Add Item</string>
-    <string name="title_activity_add_new_item">AddNewItemActivity</string>
+    <string name="title_activity_add_menus">AddNewItemActivity</string>
     <string name="title_activity_list_item">ListItemActivity</string>
+    <string name="title_activity_add_members">AddMembers</string>
 
 </resources>

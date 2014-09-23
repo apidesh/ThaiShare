@@ -1,6 +1,6 @@
 package com.example.thaishare;
 
-import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,15 +19,15 @@ public class ListItemActivity extends Activity {
 		
 		dataHandler = new DataHandler(getBaseContext());
 		dataHandler.open();		
-		Integer getId = -1;
+		//Integer getId = -1;
 		String getName = "", getPrice = "";
-		Cursor cursor = dataHandler.returnData();
+		Cursor cursor = dataHandler.returnMenusData();
 		if(cursor.moveToFirst())
 		{
 		
 			do
 			{
-				getId = cursor.getInt(0);
+				//getId = cursor.getInt(0);
 				getName = cursor.getString(1);
 				getPrice = cursor.getString(2);
 				

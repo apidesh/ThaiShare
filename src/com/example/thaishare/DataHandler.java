@@ -5,17 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
+//import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataHandler {
-	public static final String ID = "id";
-	public static final String NAME = "name";
-	public static final String PRICE = "price";
-	public static final String TABLE_NAME = "menu";
 	public static final String DATABASE_NAME = "thaisharedb";
 	public static final int DATABASE_VERSION = 1;
-	public static final String CREATE_TABLE = "create table menu (id integer primary key autoincrement, name text not null, price float not null)";
 	public static String DROP_TABLE = "DROP TABLE IF EXISTS %s";
 	
 	DataBaseHelper dbhelper;
@@ -44,8 +39,12 @@ public class DataHandler {
 			// TODO Auto-generated method stub
 			try
 			{
-			   String sql = String.format(CREATE_TABLE);		
-			   db.execSQL(sql);
+			   String sqlTableMenus = String.format(TableMenus.Create_Table_Script);		
+			   db.execSQL(sqlTableMenus);
+			   
+			   String sqlTableMembers = String.format(TableMembers.Create_Table_Script);		
+			   db.execSQL(sqlTableMembers);
+			   
 			}catch(SQLException e)
 			{
 				e.printStackTrace();
@@ -57,8 +56,12 @@ public class DataHandler {
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			// TODO Auto-generated method stub
-		   String sql = String.format(DROP_TABLE, TABLE_NAME);		
-		   db.execSQL(sql);
+		   String sqlTableMenus = String.format(DROP_TABLE, TableMenus.Table_Name);		
+		   db.execSQL(sqlTableMenus);
+		   
+		   String sqlTableMemberss = String.format(DROP_TABLE, TableMembers.Table_Name);		
+		   db.execSQL(sqlTableMemberss);
+		   
 		   onCreate(db);
 		}
 		
@@ -76,33 +79,60 @@ public class DataHandler {
 	}
 	
 	
-	public long insertData(String name, String price)
+	
+	public long insertMenusData(String name, String price)
 	{		
 		ContentValues content = new ContentValues();
-		content.put(NAME, name);
-		content.put(PRICE, price);
-		return db.insertOrThrow(TABLE_NAME, null, content);
-	}
-	
-	
-	public Cursor returnData()
-	{
-		return db.query(TABLE_NAME, new String[]{ID, NAME, PRICE},null,null,null,null,null);
-		
+		content.put(TableMenus.Field_Name, name);
+		content.put(TableMenus.Field_Price, price);
+		return db.insertOrThrow(TableMenus.Table_Name, null, content);
 	}
 
-
-	public Cursor findById(int id)
+	public Cursor returnMenusData()
 	{
-       return db.query(TABLE_NAME, new String[]{ID, NAME, PRICE},"id = ?", new String[] { Integer.toString(id) } ,null,null,null);	
+		return db.query(TableMenus.Table_Name, new String[]{TableMenus.Field_Id, TableMenus.Field_Name, TableMenus.Field_Price},null,null,null,null,null);
+	}
+
+	public Cursor findMenusById(int id)
+	{
+       return db.query(TableMenus.Table_Name, new String[]{TableMenus.Field_Id, TableMenus.Field_Name, TableMenus.Field_Price},TableMenus.Field_Id+"=?", new String[] { Integer.toString(id) } ,null,null,null);	
 	}
 	
-	public void UpdateMenu(int id, String name, String price){
+	public void UpdateMenusData(int id, String name, String price){
 		ContentValues newValues = new ContentValues();
-		newValues.put(NAME, name);
-		newValues.put(PRICE, price);
-		db.update(TABLE_NAME, newValues, "id="+id, null);
+		newValues.put(TableMenus.Field_Name, name);
+		newValues.put(TableMenus.Field_Price, price);
+		db.update(TableMenus.Table_Name, newValues, TableMenus.Field_Id+"="+id, null);
 	}
+	
+	
+	public long insertMemberssData(String firstName, String lastName, String phoneNumber)
+	{		
+		ContentValues content = new ContentValues();
+		content.put(TableMembers.Field_FirstName, firstName);
+		content.put(TableMembers.Field_LastName, lastName);
+		content.put(TableMembers.Field_PhoneNumber, phoneNumber);
+		return db.insertOrThrow(TableMembers.Table_Name, null, content);
+	}
+	
+	public Cursor returnMembersData()
+	{
+		return db.query(TableMembers.Table_Name, new String[]{TableMembers.Field_Id, TableMembers.Field_FirstName, TableMembers.Field_LastName, TableMembers.Field_PhoneNumber},null,null,null,null,null);
+	}
+	
+	public Cursor findMembersById(int id)
+	{
+       return db.query(TableMembers.Table_Name, new String[]{TableMembers.Field_Id, TableMembers.Field_FirstName, TableMembers.Field_LastName, TableMembers.Field_PhoneNumber},TableMembers.Field_Id+"=?", new String[] { Integer.toString(id) } ,null,null,null);	
+	}
+	
+	public void UpdateMembersData(int id, String firstName, String lastName, String phoneNumber){
+		ContentValues newValues = new ContentValues();
+		newValues.put(TableMembers.Field_FirstName, firstName);
+		newValues.put(TableMembers.Field_LastName, lastName);
+		newValues.put(TableMembers.Field_PhoneNumber, phoneNumber);
+		db.update(TableMembers.Table_Name, newValues, TableMembers.Field_Id+"="+id, null);
+	}
+	
 	
 	
 }

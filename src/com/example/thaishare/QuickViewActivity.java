@@ -48,7 +48,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected TableRow editRow;
 	protected TableRow headerRow;
 	protected TableLayout scrollablePart;
-    protected ArrayList<MenuItemData> menuList = null;
+    protected ArrayList<MenuItemData> menuArrayList = null;
 	protected static final int ADD_COLUMN_BTN_TAG = 5000;
 	
 	protected final static String MENU_INTENT_DATA = "MENU_ID";
@@ -211,7 +211,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
 		
 		super.onActivityResult(requestCode, resultCode, data); 
-		menuList = new ArrayList<MenuItemData>();
+		menuArrayList = new ArrayList<MenuItemData>();
            
 		Integer getId = -1;
 		String getName = "";
@@ -219,7 +219,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		if(resultCode == RESULT_OK) { 
 			DataHandler dataHandler = new DataHandler(getBaseContext());
 			dataHandler.open();		
-			Cursor cursor = dataHandler.returnData();
+			Cursor cursor = dataHandler.returnMenusData();
 			if(cursor.moveToFirst())
 			{
 			
@@ -234,7 +234,7 @@ public class QuickViewActivity extends ActionBarActivity {
 					item.setName(getName);
 					item.setPrice(getPrice);
 					
-					menuList.add(item);
+					menuArrayList.add(item);
 					
 					
 				}while(cursor.moveToNext());
@@ -243,15 +243,21 @@ public class QuickViewActivity extends ActionBarActivity {
 			
 			dataHandler.close();
 		} 
-		
+		while (headerRow.getChildCount() <  menuArrayList.size()) {
+			addColumn();
+		}
 		// set display
-		for(int i=0; i< menuList.size(); i++)
+		for(int i=0; i< menuArrayList.size(); i++)
 		{
+			
 		TextView textView = (TextView) headerRow.getChildAt(i);
-		MenuItemData menu = (MenuItemData)menuList.get(i);
+		MenuItemData menu = (MenuItemData)menuArrayList.get(i);
+		menu.setColumnsIndex(i);
 		textView.setText(menu.getName());
 		}
 
+		
+		
 	} 
 
 
@@ -304,8 +310,9 @@ public class QuickViewActivity extends ActionBarActivity {
 				switch (event.getAction()) {
 				case android.view.MotionEvent.ACTION_DOWN :
 					//					changeTextViewColor(v, Color.YELLOW);
-					Intent intent = new Intent(getBaseContext(), AddNewItemActivity.class);
-					if (menuList != null) intent.putExtra(MENU_INTENT_DATA, menuList.get(0));
+					
+					Intent intent = new Intent(getBaseContext(), AddMenus.class);
+					if (menuArrayList != null) intent.putExtra(MENU_INTENT_DATA, menuArrayList.get(0));
 					else intent.putExtra("MENU_ID", new MenuItemData());
 					navToAddItemViewMode(intent);
 					break;

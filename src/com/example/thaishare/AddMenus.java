@@ -1,5 +1,7 @@
 package com.example.thaishare;
 
+//import java.util.EmptyStackException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddNewItemActivity extends Activity {
+public class AddMenus extends Activity {
     Button save, back, next;
     TextView id;
     EditText name, price;
@@ -23,7 +25,7 @@ public class AddNewItemActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
-		setContentView(R.layout.activity_add_new_item);
+		setContentView(R.layout.activity_add_menus);
 		id = (TextView) findViewById(R.id.id);
 		save = (Button) findViewById(R.id.save);
 		back = (Button) findViewById(R.id.back);
@@ -43,11 +45,11 @@ public class AddNewItemActivity extends Activity {
 				dataHandler.open();	
 				if(!updateId.equals(""))
 				{
-					dataHandler.UpdateMenu(Integer.parseInt(updateId), getName, getPrice);
+					dataHandler.UpdateMenusData(Integer.parseInt(updateId), getName, getPrice);
 				}
 				else
 				{
-				long insertedId = dataHandler.insertData(getName, getPrice);
+				dataHandler.insertMenusData(getName, getPrice);
 				Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
 				}
 					
@@ -68,30 +70,46 @@ public class AddNewItemActivity extends Activity {
 				String getName = "";
 				Double getPrice = 0.0;
 				
-				int menuId = Integer.parseInt(id.getText().toString());
-					menuId--;
-				dataHandler = new DataHandler(getBaseContext());
-				dataHandler.open();	
-				Cursor cursor = dataHandler.findById(menuId);
-				if(cursor.moveToFirst())
+				String updateId = id.getText().toString();
+				if(!updateId.equals(""))
 				{
-				
-					do
+					int menuId = Integer.parseInt(updateId);
+						menuId--;
+					dataHandler = new DataHandler(getBaseContext());
+					dataHandler.open();	
+					Cursor cursor = dataHandler.findMenusById(menuId);
+					if(cursor.moveToFirst())
 					{
-						
-						getId = cursor.getInt(cursor.getColumnIndex("id"));
-						getName = cursor.getString(cursor.getColumnIndex("name"));
-						getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
-						
-					id.setText(Integer.toString(getId));
-					name.setText(getName);
-					price.setText(getPrice.toString());			
-						
-					}while(cursor.moveToNext());
 					
+						do
+						{
+							
+							getId = cursor.getInt(cursor.getColumnIndex("id"));
+							getName = cursor.getString(cursor.getColumnIndex("name"));
+							getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
+							
+						id.setText(Integer.toString(getId));
+						name.setText(getName);
+						price.setText(getPrice.toString());			
+							
+						}while(cursor.moveToNext());
+						
+						back.setEnabled(true);
+						next.setEnabled(true);
+					}
+					else
+					{
+						back.setEnabled(false);
+					}
+						
+					
+					dataHandler.close();
 				}
-				
-				dataHandler.close();
+				else
+				{
+					back.setEnabled(false);
+				}
+					
 			}
 		});
 		
@@ -104,30 +122,49 @@ public class AddNewItemActivity extends Activity {
 				int getId = -1;
 				String getName = "";
 				Double getPrice = 0.0;
-				
-				int menuId = Integer.parseInt(id.getText().toString());
-					menuId++;
-				dataHandler = new DataHandler(getBaseContext());
-				dataHandler.open();	
-				Cursor cursor = dataHandler.findById(menuId);
-				if(cursor.moveToFirst())
+				String updateId = id.getText().toString();
+				if(!updateId.equals(""))
 				{
-				
-					do
-					{
-						getId = cursor.getInt(cursor.getColumnIndex("id"));
-						getName = cursor.getString(cursor.getColumnIndex("name"));
-						getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
+						int menuId = Integer.parseInt(updateId);
+							menuId++;
+						dataHandler = new DataHandler(getBaseContext());
+						dataHandler.open();	
+						Cursor cursor = dataHandler.findMenusById(menuId);
+							if(cursor.moveToFirst())
+							{
+								do
+								{
+									getId = cursor.getInt(cursor.getColumnIndex("id"));
+									getName = cursor.getString(cursor.getColumnIndex("name"));
+									getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
+									
+								id.setText(Integer.toString(getId));
+								name.setText(getName);
+								price.setText(getPrice.toString());			
+									
+								}while(cursor.moveToNext());
+								
+								back.setEnabled(true);
+								next.setEnabled(true);
+							}
+							else
+							{
+								id.setText("");
+								name.setText("");
+								price.setText("");	
+								next.setEnabled(false);
+							}
 						
-					id.setText(Integer.toString(getId));
-					name.setText(getName);
-					price.setText(getPrice.toString());			
 						
-					}while(cursor.moveToNext());
-					
+						dataHandler.close();
 				}
-				
-				dataHandler.close();
+				else
+				{
+					id.setText("");
+					name.setText("");
+					price.setText("");	
+					next.setEnabled(false);
+				}
 			}
 		});
 		
@@ -150,13 +187,12 @@ public class AddNewItemActivity extends Activity {
 
 		dataHandler = new DataHandler(getBaseContext());
 		dataHandler.open();	
-		Cursor cursor = dataHandler.findById(menu.getId());
+		Cursor cursor = dataHandler.findMenusById(menu.getId());
 		if(cursor.moveToFirst())
 		{
 		
 			do
 			{
-				MenuItemData item = new MenuItemData();
 				getId = cursor.getInt(cursor.getColumnIndex("id"));
 				getName = cursor.getString(cursor.getColumnIndex("name"));
 				getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
@@ -176,7 +212,7 @@ public class AddNewItemActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.add_new_item, menu);
+		getMenuInflater().inflate(R.menu.add_menus, menu);
 		return true;
 	}
 
