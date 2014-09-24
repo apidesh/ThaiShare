@@ -39,7 +39,7 @@ public class AddMembers extends ActionBarActivity {
 	
 	private void getContacts()
 	{
-		
+		/*
 		 String phoneNumber = null;
 		 String firstName = null;
 		 
@@ -142,7 +142,7 @@ public class AddMembers extends ActionBarActivity {
 	            outputText.setText(output);
 
 	        }
-
+*/
 
 	}
 }

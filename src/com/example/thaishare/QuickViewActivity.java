@@ -38,8 +38,8 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected SyncHorizontalScrollView contentScrollView;
 	protected SyncHorizontalScrollView editHeaderScrollView;
 
-	protected static final int STARTING_NUM_ROWS = 12;						// default number of rows
-	protected static final int STARTING_NUM_COLUMNS = 3;					// default number of activities
+	protected static final int STARTING_NUM_ROWS = 1;						// default number of rows
+	protected static final int STARTING_NUM_COLUMNS = 1;					// default number of activities
 
 	protected int fixedColumnWidth = 20;										// percentage of row header width with respect to the screen width
 	protected int scrollableColumnWidth = 20;									// percentage of table row width with respect to the screen width
@@ -254,6 +254,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		MenuItemData menu = (MenuItemData)menuArrayList.get(i);
 		menu.setColumnsIndex(i);
 		textView.setText(menu.getName());
+		textView.setId(menu.getId());
 		}
 
 		
@@ -291,13 +292,12 @@ public class QuickViewActivity extends ActionBarActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public TextView makeTableRowHeaderWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;
-		TextView tableDataView = new TextView(this);
+		final TextView tableDataView = new TextView(this);
 		tableDataView.setText(text);
 		tableDataView.setTextColor(Color.BLACK);
 		tableDataView.setTextSize(20);
 		tableDataView.setWidth(widthInPercentOfScreenWidth * screenWidth / 100);
 		tableDataView.setHeight(fixedHeightInPixels);
-
 
 		// long touch
 
@@ -312,8 +312,7 @@ public class QuickViewActivity extends ActionBarActivity {
 					//					changeTextViewColor(v, Color.YELLOW);
 					
 					Intent intent = new Intent(getBaseContext(), AddMenus.class);
-					if (menuArrayList != null) intent.putExtra(MENU_INTENT_DATA, menuArrayList.get(0));
-					else intent.putExtra("MENU_ID", new MenuItemData());
+					intent.putExtra(MENU_INTENT_DATA, findMenuItemData(tableDataView.getId()));
 					navToAddItemViewMode(intent);
 					break;
 				case android.view.MotionEvent.ACTION_UP :
@@ -326,6 +325,16 @@ public class QuickViewActivity extends ActionBarActivity {
 		});
 
 		return tableDataView;
+	}
+	
+	private MenuItemData findMenuItemData(int id) {
+		if (menuArrayList != null) {
+			for (MenuItemData item : menuArrayList) {
+				if (id == item.getId())
+					return item;
+			}
+		}
+		return new MenuItemData();
 	}
 
 	public void navToAddItemViewMode(Intent intent) {
