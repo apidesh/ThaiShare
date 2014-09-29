@@ -52,7 +52,8 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected static final int ADD_COLUMN_BTN_TAG = 5000;
 	
 	protected final static String MENU_INTENT_DATA = "MENU_ID";
-
+	protected final static String MEMBER_INTENT_DATA = "MEMBER_ID";
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

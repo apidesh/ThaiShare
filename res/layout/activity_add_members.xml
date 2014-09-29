@@ -33,13 +33,42 @@
         android:layout_centerHorizontal="true"
         android:visibility="invisible" />
 
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:ems="10"
+        android:hint="Last Name" />
+
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lastName"
+        android:layout_below="@+id/id"
+        android:ems="10"
+        android:hint="First Name" />
+
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/phoneNumber"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="76dp"
+        android:layout_marginTop="52dp"
         android:text="Save" />
+
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lastName"
+        android:layout_below="@+id/lastName"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:hint="Phone Number" />
 
 </RelativeLayout>

@@ -33,7 +33,7 @@ public class MenuItemData implements Serializable {
 	public int getColumnsIndex() {
 		return _columnsIndex;
 	}
-	public void setColumnsIndex(int _columnsIndex) {
-		this._columnsIndex = _columnsIndex;
+	public void setColumnsIndex(int columnsIndex) {
+		this._columnsIndex = columnsIndex;
 	}
 }

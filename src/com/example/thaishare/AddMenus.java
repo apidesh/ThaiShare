@@ -50,7 +50,7 @@ public class AddMenus extends Activity {
 				else
 				{
 				dataHandler.insertMenusData(getName, getPrice);
-				Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
+				//Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
 				}
 					
 				dataHandler.close();

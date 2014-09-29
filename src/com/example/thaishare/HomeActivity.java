@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends Activity {
 	
-	private Button quickModeBtn, addItemBtn, listItemBtn;
+	private Button quickModeBtn, addItemBtn, listItemBtn, addMembersBtn;
 
 
     @Override
@@ -28,6 +28,13 @@ public class HomeActivity extends Activity {
             }
         });
         
+        // set up button listener
+        addMembersBtn = (Button) findViewById(R.id.addMembersBtn);
+        addMembersBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	navToAddMemberItemViewMode();
+            }
+        });
         
         addItemBtn = (Button) findViewById(R.id.addItemBtn);
         addItemBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +66,12 @@ public class HomeActivity extends Activity {
 
     public void navToAddItemViewMode() {
     	Intent intent = new Intent(this, AddMenus.class);
+    	startActivity(intent);
+    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+    
+    public void navToAddMemberItemViewMode() {
+    	Intent intent = new Intent(this, AddMembers.class);
     	startActivity(intent);
     	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
