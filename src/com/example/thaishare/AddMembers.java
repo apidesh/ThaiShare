@@ -54,7 +54,7 @@ public class AddMembers extends Activity {
 				else
 				{
 			    dataHandler.insertMemberssData(getFirstName, getLastName, getPhoneNumber);
-				//Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
+				Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
 				}
 					
 				dataHandler.close();
