@@ -8,9 +8,9 @@
     <string name="detail_mode_btn">Detail Page</string>
     <string name="history_btn">History</string>
     <string name="title_activity_quick_view">Quick Edit</string>
-    <string name="default_item_placeholder">Item</string>
-    <string name="dummy_header_name">Group Name</string>
-    <string name="default_group_placeholder">Group</string>
+    <string name="default_item_placeholder">*</string>
+    <string name="dummy_header_name"> </string>
+    <string name="default_group_placeholder">*</string>
     <string name="action_edit_table">Edit Table</string>
     <string name="add">add</string>
     <string name="add_item">Add Item</string>

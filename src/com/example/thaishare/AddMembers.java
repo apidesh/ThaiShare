@@ -178,7 +178,7 @@ public class AddMembers extends Activity {
 			}
 		});
 		
-    // loadMembersData(intent);
+     loadMembersData(intent);
 		
 	}
 	private void loadMembersData(Intent intent)
@@ -197,7 +197,7 @@ public class AddMembers extends Activity {
 		String getPhoneNumber = "";
 		dataHandler = new DataHandler(getBaseContext());
 		dataHandler.open();	
-		Cursor cursor = dataHandler.findMenusById(member.getId());
+		Cursor cursor = dataHandler.findMembersById(member.getId());
 		if(cursor.moveToFirst())
 		{
 		

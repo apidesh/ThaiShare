@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -47,8 +48,10 @@ public class QuickViewActivity extends ActionBarActivity {
 	protected int fixedHeaderHeight = 100;										// height in pixels of header row
 	protected TableRow editRow;
 	protected TableRow headerRow;
+	protected TableLayout fixedColumn;
 	protected TableLayout scrollablePart;
     protected ArrayList<MenuItemData> menuArrayList = null;
+    protected ArrayList<MemberItemData> memberArrayList = null;
 	protected static final int ADD_COLUMN_BTN_TAG = 5000;
 	
 	protected final static String MENU_INTENT_DATA = "MENU_ID";
@@ -112,7 +115,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		editHeaderScrollView.setSyncView(headerScrollView, contentScrollView);
 
 		// Column (fixed when scrolled horizontally)
-		TableLayout fixedColumn = (TableLayout) findViewById(R.id.fixed_column);
+		fixedColumn = (TableLayout) findViewById(R.id.fixed_column);
 
 		// Rest of the table (within a scroll view)
 		scrollablePart = (TableLayout) findViewById(R.id.scrollable_part);
@@ -204,60 +207,145 @@ public class QuickViewActivity extends ActionBarActivity {
 			row.addView(makeTableRowWithText("new value", scrollableColumnWidth, fixedRowHeight));
 		}
 	}
+	
+	/**
+	 * Method event called when user tabs the add row button
+	 */
+	public void addRow() {
+		/* add item header row */
+		TextView fixedView = makeTableRowWithText(getResources().getString( R.string.default_group_placeholder ) 
+				, scrollableColumnWidth, fixedRowHeight);
+		fixedView.setBackgroundColor(getResources().getColor( R.color.table_group_column ));
+		fixedColumn.addView(fixedView); 
+		
+
+//		/* add remove button for row */
+//		int numRow = fixedColumn.getChildCount();
+//		Button removeBtn = createRemoveButton(false, numRow-1);
+//		editColumn.addView(removeBtn, editColumn.getChildCount() - 1);
+
+		/* add table content row */
+		for(int i = 0, numCol = headerRow.getChildCount(); i < numCol; i++) {
+			TableRow row = new TableRow(this);
+			TableRow.LayoutParams wrapWrapTableRowParams = 
+					new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			row.setLayoutParams(wrapWrapTableRowParams);
+			row.setGravity(Gravity.CENTER);
+			//			row.setBackgroundColor(Color.WHITE);
+			
+			row.addView(makeTableRowWithText("value " + (i+1), scrollableColumnWidth, fixedRowHeight));
+			scrollablePart.addView(row);
+		}
+	}
 
 	@Override 
 	protected void onActivityResult(int requestCode, int resultCode, 
 			Intent data) { 
 		// TODO Auto-generated method stub 
-		Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
-		
+		//Toast.makeText(QuickViewActivity.this, "SAVED FROM ADD_ITEM REQUEst code " + requestCode, Toast.LENGTH_SHORT).show();
 		super.onActivityResult(requestCode, resultCode, data); 
-		menuArrayList = new ArrayList<MenuItemData>();
-           
-		Integer getId = -1;
-		String getName = "";
-		Double getPrice = 0.0;
-		if(resultCode == RESULT_OK) { 
-			DataHandler dataHandler = new DataHandler(getBaseContext());
-			dataHandler.open();		
-			Cursor cursor = dataHandler.returnMenusData();
-			if(cursor.moveToFirst())
-			{
-			
-				do
-				{
-					MenuItemData item = new MenuItemData();
-					getId = cursor.getInt(cursor.getColumnIndex("id"));
-					getName = cursor.getString(cursor.getColumnIndex("name"));
-					getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
-					
-					item.setId(getId);
-					item.setName(getName);
-					item.setPrice(getPrice);
-					
-					menuArrayList.add(item);
-					
-					
-				}while(cursor.moveToNext());
-				
-			}
-			
-			dataHandler.close();
-		} 
-		while (headerRow.getChildCount() <  menuArrayList.size()) {
-			addColumn();
-		}
-		// set display
-		for(int i=0; i< menuArrayList.size(); i++)
+		if(requestCode == 30)
 		{
 			
-		TextView textView = (TextView) headerRow.getChildAt(i);
-		MenuItemData menu = (MenuItemData)menuArrayList.get(i);
-		menu.setColumnsIndex(i);
-		textView.setText(menu.getName());
-		textView.setId(menu.getId());
+			menuArrayList = new ArrayList<MenuItemData>();
+	           
+			Integer getId = -1;
+			String getName = "";
+			Double getPrice = 0.0;
+			if(resultCode == RESULT_OK) { 
+				DataHandler dataHandler = new DataHandler(getBaseContext());
+				dataHandler.open();		
+				Cursor cursor = dataHandler.returnMenusData();
+				if(cursor.moveToFirst())
+				{
+				
+					do
+					{
+						MenuItemData item = new MenuItemData();
+						getId = cursor.getInt(cursor.getColumnIndex("id"));
+						getName = cursor.getString(cursor.getColumnIndex("name"));
+						getPrice = cursor.getDouble(cursor.getColumnIndex("price"));
+						
+						item.setId(getId);
+						item.setName(getName);
+						item.setPrice(getPrice);
+						
+						menuArrayList.add(item);
+						
+						
+					}while(cursor.moveToNext());
+					
+				}
+				
+				dataHandler.close();
+			} 
+			while (headerRow.getChildCount() <  menuArrayList.size()) {
+				addColumn();
+			}
+			// set display
+			for(int i=0; i< menuArrayList.size(); i++)
+			{
+				
+				TextView textView = (TextView) headerRow.getChildAt(i);
+				MenuItemData menu = (MenuItemData)menuArrayList.get(i);
+				menu.setColumnsIndex(i);
+				textView.setText(menu.getName());
+				textView.setId(menu.getId());
+			}
 		}
-
+		else
+		{
+			memberArrayList = new ArrayList<MemberItemData>();
+	           
+			Integer getId = -1;
+			String getFirstName = "";
+			String getLastName = "";
+			String getPhoneNumber = "";
+			
+			if(resultCode == RESULT_OK) { 
+				DataHandler dataHandler = new DataHandler(getBaseContext());
+				dataHandler.open();		
+				Cursor cursor = dataHandler.returnMembersData();
+				if(cursor.moveToFirst())
+				{
+				
+					do
+					{
+						MemberItemData item = new MemberItemData();
+						getId = cursor.getInt(cursor.getColumnIndex(TableMembers.Field_Id));
+						getFirstName = cursor.getString(cursor.getColumnIndex(TableMembers.Field_FirstName));
+						getLastName = cursor.getString(cursor.getColumnIndex(TableMembers.Field_LastName));
+						getPhoneNumber = cursor.getString(cursor.getColumnIndex(TableMembers.Field_PhoneNumber));
+						
+						item.setId(getId);
+						item.setFirstName(getFirstName);
+						item.setLastName(getLastName);
+						item.setPhoneNumber(getPhoneNumber);
+						
+						memberArrayList.add(item);
+						
+						
+					}while(cursor.moveToNext());
+					
+				}
+				
+				dataHandler.close();
+			} 
+			while (fixedColumn.getChildCount() <  memberArrayList.size()) {
+				addRow();
+			}
+			// set display
+			for(int i=0; i< memberArrayList.size(); i++)
+			{
+				
+				TextView textView = (TextView) fixedColumn.getChildAt(i);
+				MemberItemData menu = (MemberItemData)memberArrayList.get(i);
+				menu.setRowsIndex(i);
+				textView.setText(menu.getFirstName());
+				textView.setId(menu.getId());
+			}
+			
+		}
 		
 		
 	} 
@@ -338,8 +426,24 @@ public class QuickViewActivity extends ActionBarActivity {
 		return new MenuItemData();
 	}
 
+	
+	private MemberItemData findMemberItemData(int id) {
+		if (memberArrayList != null) {
+			for (MemberItemData item : memberArrayList) {
+				if (id == item.getId())
+					return item;
+			}
+		}
+		return new MemberItemData();
+	}
+	
 	public void navToAddItemViewMode(Intent intent) {
 		startActivityForResult(intent, 30);
+		//	    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	}
+	
+	public void navToAddMemberItemViewMode(Intent intent) {
+		startActivityForResult(intent, 40);
 		//	    	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
@@ -349,7 +453,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public TextView makeTableRowWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;
-		TextView tableDataView = new TextView(this);
+		final TextView tableDataView = new TextView(this);
 		tableDataView.setText(text);
 		tableDataView.setTextColor(Color.BLACK);
 		tableDataView.setTextSize(20);
@@ -368,6 +472,11 @@ public class QuickViewActivity extends ActionBarActivity {
 				switch (event.getAction()) {
 				case android.view.MotionEvent.ACTION_DOWN :
 					//					changeTextViewColor(v, Color.YELLOW);
+					Intent intent = new Intent(getBaseContext(), AddMembers.class);
+					intent.putExtra(MEMBER_INTENT_DATA, findMemberItemData(tableDataView.getId()));
+					System.out.println("Column id = " + tableDataView.getId());
+					navToAddMemberItemViewMode(intent);
+					
 					break;
 				case android.view.MotionEvent.ACTION_UP :
 					//					changeTextViewColor(v, prevColor);
