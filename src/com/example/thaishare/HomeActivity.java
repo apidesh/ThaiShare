@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class HomeActivity extends Activity {
 	
-	private Button quickModeBtn, addItemBtn, listItemBtn, addMembersBtn;
+	private Button quickModeBtn, addItemBtn, listItemBtn, addMembersBtn, addTranButton;
 
 
     @Override
@@ -53,6 +53,18 @@ public class HomeActivity extends Activity {
 			}
 		});
         
+        
+        addTranButton =(Button) findViewById(R.id.addTransactionBtn);
+        addTranButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				lookupTransaction();
+			}
+		});
+        
+        
     }
     
     /**
@@ -81,6 +93,12 @@ public class HomeActivity extends Activity {
     	Intent intent = new Intent(this, ListItemActivity.class);
     	startActivity(intent);
     	overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+    
+    public void lookupTransaction() {
+    	//Intent intent = new Intent(this, ListItemActivity.class);
+    	//startActivity(intent);
+    	//overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

@@ -71,4 +71,13 @@
       android:layout_marginRight="48dp"
       android:text="@string/add_item" />
 
+  <Button
+      android:id="@+id/addTransactionBtn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignLeft="@+id/detailModeBtn"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="32dp"
+      android:text="@string/addTransaction" />
+
 </RelativeLayout>

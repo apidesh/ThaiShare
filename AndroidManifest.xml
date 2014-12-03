@@ -45,6 +45,10 @@
             android:name=".AddMembers"
             android:label="@string/title_activity_add_members" >
         </activity>
+        
+        <activity android:name=".AddNewMenuTabActivity"></activity>
+        <activity android:name=".ListMenuTabActivity"></activity>
+        
     </application>
 
 </manifest>

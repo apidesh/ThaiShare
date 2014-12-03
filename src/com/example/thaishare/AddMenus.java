@@ -3,6 +3,7 @@ package com.example.thaishare;
 //import java.util.EmptyStackException;
 
 import android.app.Activity;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,27 +13,49 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddMenus extends Activity {
+public class AddMenus extends TabActivity {
     Button save, back, next;
     TextView id;
     EditText name, price;
     DataHandler dataHandler;
+    private TabHost mTabHost;
     
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
 		setContentView(R.layout.activity_add_menus);
-		id = (TextView) findViewById(R.id.id);
-		save = (Button) findViewById(R.id.save);
-		back = (Button) findViewById(R.id.back);
-		next = (Button) findViewById(R.id.next);
-		name = (EditText) findViewById(R.id.name);
-		price = (EditText) findViewById(R.id.price);
+		//id = (TextView) findViewById(R.id.id);
+		//save = (Button) findViewById(R.id.save);
+		//back = (Button) findViewById(R.id.back);
+		//next = (Button) findViewById(R.id.next);
+		//name = (EditText) findViewById(R.id.name);
+		//price = (EditText) findViewById(R.id.price);
 		
+		mTabHost = getTabHost();
+		TabHost.TabSpec spec;
+		Intent mintent;
+		mintent = new Intent(this, AddNewMenuTabActivity.class);
+		spec = mTabHost.newTabSpec("addnewmenutab")
+				.setIndicator("AddNewMenuTab")
+				.setContent(mintent);
+		mTabHost.addTab(spec);
+		
+	
+		
+		mintent = new Intent(this, ListMenuTabActivity.class);
+		spec = mTabHost.newTabSpec("listmenutab")
+				.setIndicator("ListMenuTab")
+				.setContent(mintent);
+		mTabHost.addTab(spec);
+		
+		
+		/*
 		save.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -168,7 +191,11 @@ public class AddMenus extends Activity {
 			}
 		});
 		
-        loadMenuData(intent);
+        
+      
+       
+        
+        loadMenuData(intent);*/
 	}
 
 	private void loadMenuData(Intent intent)

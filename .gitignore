@@ -2,3 +2,8 @@
 /*.properties
 /*.classpath
 /gen
+/.settings
+/assets
+/*.project
+/.gitignore.txt
+/proguard-project.txt

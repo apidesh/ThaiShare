@@ -17,5 +17,6 @@
     <string name="title_activity_add_menus">AddNewItemActivity</string>
     <string name="title_activity_list_item">ListItemActivity</string>
     <string name="title_activity_add_members">AddMembers</string>
+     <string name="addTransaction">Add Transaction</string>
 
 </resources>

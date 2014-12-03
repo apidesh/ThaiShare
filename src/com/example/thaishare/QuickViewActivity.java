@@ -3,35 +3,34 @@ package com.example.thaishare;
 
 import java.util.ArrayList;
 
-import android.support.v7.app.ActionBar.LayoutParams;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.LayoutParams;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class QuickViewActivity extends ActionBarActivity {
 
@@ -56,6 +55,7 @@ public class QuickViewActivity extends ActionBarActivity {
 	
 	protected final static String MENU_INTENT_DATA = "MENU_ID";
 	protected final static String MEMBER_INTENT_DATA = "MEMBER_ID";
+	
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
@@ -129,16 +129,16 @@ public class QuickViewActivity extends ActionBarActivity {
 			row.setGravity(Gravity.CENTER);
 			//			row.setBackgroundColor(Color.WHITE);
 			for (int j = 0; j < STARTING_NUM_COLUMNS; j++) {
-				row.addView(makeTableRowWithText("value " + (j+1), scrollableColumnWidth, fixedRowHeight));
+				row.addView(makeTableRowCheckBox(scrollableColumnWidth, fixedRowHeight));
 			}
 			scrollablePart.addView(row);
-			((TextView) row.getChildAt(0)).setText("hello!!!");;
 		}
 
 		editRow.addView(createAddButton());
 
 		// hide all edit buttons
 		editHeaderScrollView.setVisibility(View.INVISIBLE);
+
 
 	}
 
@@ -204,7 +204,7 @@ public class QuickViewActivity extends ActionBarActivity {
 		/* add table content row */
 		for(int i = 0, numRows = scrollablePart.getChildCount(); i < numRows; i++) {
 			TableRow row = (TableRow) scrollablePart.getChildAt(i);
-			row.addView(makeTableRowWithText("new value", scrollableColumnWidth, fixedRowHeight));
+			row.addView(makeTableRowCheckBox(scrollableColumnWidth, fixedRowHeight));
 		}
 	}
 	
@@ -233,7 +233,7 @@ public class QuickViewActivity extends ActionBarActivity {
 			row.setGravity(Gravity.CENTER);
 			//			row.setBackgroundColor(Color.WHITE);
 			
-			row.addView(makeTableRowWithText("value " + (i+1), scrollableColumnWidth, fixedRowHeight));
+			row.addView(makeTableRowCheckBox(scrollableColumnWidth, fixedRowHeight));
 			scrollablePart.addView(row);
 		}
 	}
@@ -449,7 +449,46 @@ public class QuickViewActivity extends ActionBarActivity {
 
 	//	//util method
 	//	private Button tableDataBtn;
+	
+	/**
+	 * Create checkbox
+	 * @param text
+	 * @param widthInPercentOfScreenWidth
+	 * @param fixedHeightInPixels
+	 * @return
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public TextView makeTableRowCheckBox(int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
+		int screenWidth = getResources().getDisplayMetrics().widthPixels;
+		final CheckBox checkBox = new CheckBox(this);
+		checkBox.setWidth(widthInPercentOfScreenWidth * screenWidth / 100);
+		checkBox.setHeight(fixedHeightInPixels);
 
+		checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+		    {
+		        if ( isChecked )
+		        {
+		        	//TODO
+		            Toast.makeText(QuickViewActivity.this,"CheckBox is Checked ..",3000).show();
+		        }
+		        else{
+		            Toast.makeText(QuickViewActivity.this,"CheckBox is Unchecked ..",3000).show();
+		        }
+
+		    }
+		});
+
+		return checkBox;
+	}
+
+	/**
+	 * Create column member
+	 * @param text
+	 * @param widthInPercentOfScreenWidth
+	 * @param fixedHeightInPixels
+	 * @return
+	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public TextView makeTableRowWithText(String text, int widthInPercentOfScreenWidth, int fixedHeightInPixels) {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;

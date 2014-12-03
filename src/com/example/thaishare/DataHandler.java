@@ -1,5 +1,6 @@
 package com.example.thaishare;
 
+import android.R.bool;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -45,8 +46,10 @@ public class DataHandler {
 			   String sqlTableMembers = String.format(TableMembers.Create_Table_Script);		
 			   db.execSQL(sqlTableMembers);
 			   
-			}catch(SQLException e)
-			{
+			   String sqlTableActivities = String.format(TableActivities.Create_Table_Script);		
+			   db.execSQL(sqlTableActivities);
+			   
+			}catch(SQLException e) {
 				e.printStackTrace();
 			}
 		}
@@ -55,6 +58,8 @@ public class DataHandler {
 		
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			try
+			{
 			// TODO Auto-generated method stub
 		   String sqlTableMenus = String.format(DROP_TABLE, TableMenus.Table_Name);		
 		   db.execSQL(sqlTableMenus);
@@ -62,7 +67,14 @@ public class DataHandler {
 		   String sqlTableMemberss = String.format(DROP_TABLE, TableMembers.Table_Name);		
 		   db.execSQL(sqlTableMemberss);
 		   
+		   String sqlTableActivities = String.format(DROP_TABLE, TableActivities.Table_Name);		
+		   db.execSQL(sqlTableActivities);
+		   
 		   onCreate(db);
+		   
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -79,7 +91,7 @@ public class DataHandler {
 	}
 	
 	
-	
+	/*Menus*/
 	public long insertMenusData(String name, String price)
 	{		
 		ContentValues content = new ContentValues();
@@ -105,6 +117,7 @@ public class DataHandler {
 		db.update(TableMenus.Table_Name, newValues, TableMenus.Field_Id+"="+id, null);
 	}
 	
+	/*Members*/
 	
 	public long insertMemberssData(String firstName, String lastName, String phoneNumber)
 	{		
@@ -134,5 +147,38 @@ public class DataHandler {
 	}
 	
 	
+	/*Activities*/
+	public long insertActivitiesData(boolean isOrder, int membersId, int menusId)
+	{		
+		ContentValues content = new ContentValues();
+		content.put(TableActivities.Field_IsOrder, isOrder);
+		content.put(TableActivities.Field_Members_Id, membersId);
+		content.put(TableActivities.Field_Menus_Id, menusId);
+		return db.insertOrThrow(TableActivities.Table_Name, null, content);
+	}
 	
+	public Cursor returnActivitiesData()
+	{
+		//return db.query(TableActivities.Table_Name, new String[]{TableActivities.Field_Id, TableActivities.Field_IsOrder, TableActivities.Field_Members_Id, TableActivities.Field_Menus_Id},null,null,null,null,null);
+		
+		return db.rawQuery(TableActivities.SelectAlls_Script, null);
+	}
+	public Cursor findActivitiesById(int id)
+	{
+		return db.rawQuery(TableActivities.Find_By_Id_Script, new String[] { Integer.toString(id) });
+      // return db.query(TableMembers.Table_Name, new String[]{TableMembers.Field_Id, TableMembers.Field_FirstName, TableMembers.Field_LastName, TableMembers.Field_PhoneNumber},TableMembers.Field_Id+"=?", new String[] { Integer.toString(id) } ,null,null,null);	
+	}
+	public Cursor findActivitiesByLatest()
+	{
+		return db.rawQuery(TableActivities.Find_By_Latest_Script, null);
+      // return db.query(TableMembers.Table_Name, new String[]{TableMembers.Field_Id, TableMembers.Field_FirstName, TableMembers.Field_LastName, TableMembers.Field_PhoneNumber},TableMembers.Field_Id+"=?", new String[] { Integer.toString(id) } ,null,null,null);	
+	}
+	public void UpdateActivitiesData(int id, boolean isOrder, int membersId, int menusId){
+		
+		ContentValues newValues = new ContentValues();
+		newValues.put(TableActivities.Field_IsOrder, isOrder);
+		newValues.put(TableActivities.Field_Members_Id, membersId);
+		newValues.put(TableActivities.Field_Menus_Id, menusId);
+		db.update(TableActivities.Table_Name, newValues, TableActivities.Field_Id+"="+id, null);
+	}
 }
