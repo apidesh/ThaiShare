@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableaddnewmenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.thaishare.AddNewMenuTabActivity" >
+
+   <TableLayout
+       android:id="@+id/mytable"
+       android:layout_width="match_parent"
+       android:layout_height="50sp"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentTop="true"
+       android:layout_weight="0.50" >
+
+       <TableRow
+           android:id="@+id/tableRow1"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent" >
+
+           <EditText
+               android:id="@+id/name"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:hint="Name" />
+       </TableRow>
+
+       <TableRow
+           android:id="@+id/tableRow2"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent" >
+
+           <EditText
+               android:id="@+id/price"
+               android:layout_width="fill_parent"
+               android:layout_height="fill_parent"
+               android:hint="Price" />
+       </TableRow>
+
+       <TableRow
+           android:id="@+id/tableRow3"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent" >
+
+           <ImageButton
+               android:id="@+id/imageButton1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/add_btn" />
+       </TableRow>
+   </TableLayout>
+
+   <ImageView
+       android:id="@+id/imagemenu"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_weight="0.31"
+       android:scaleType="center"
+       android:src="@drawable/ic_launcher" />
+
+
+
+   <Button
+       android:id="@+id/save"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:text="Save" />
+   
+      <TextView
+       android:id="@+id/id"
+       android:visibility="invisible"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="" />
+
+</LinearLayout>
